@@ -27,7 +27,7 @@ import frc.robot.subsystems.drivetrain.RARHolonomicDriveController;
 import frc.robot.subsystems.drivetrain.SwerveDrive;
 
 public class DriveTrajectoryTask extends Task {
-  private final boolean k_debugPath = false;
+  private final boolean k_debugPath = true;
 
   private SwerveDrive m_swerve = SwerveDrive.getInstance();
   private PathPlannerTrajectory m_autoTrajectory;

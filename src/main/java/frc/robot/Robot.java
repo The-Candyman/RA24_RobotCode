@@ -6,7 +6,14 @@ import java.util.List;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Preferences;
@@ -203,6 +210,20 @@ public class Robot extends LoggedRobot {
     m_swerve.m_visionConstants = RobotConstants.config.Vision.teleopVisionConstants;
 
     m_leds.breathe();
+
+    // AutoTrajectory trajectory = new AutoTrajectory(
+    //   new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+    //   new Pose2d(10, 2, Rotation2d.fromDegrees(0)));
+
+    // PathPlannerPath path = trajectory.generatePath();
+
+    // Trajectory adjustedTrajectory = TrajectoryGenerator.generateTrajectory(
+    //   path.getPathPoses(),
+    //   new TrajectoryConfig(
+    //     path.getGlobalConstraints().getMaxVelocityMps(),
+    //     path.getGlobalConstraints().getMaxAccelerationMpsSq()));
+
+    // Logger.recordOutput("Robot/Trajectory", adjustedTrajectory);
   }
 
   private void shooterCorrection() {
