@@ -1,9 +1,11 @@
 package frc.robot.constants;
 
+import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
@@ -421,5 +423,11 @@ public class Constants {
     }
 
     public int k_totalLength = Drive.k_length + Shooter.k_length;
+  }
+
+  public ObstacleBoundingBoxesConstants ObstacleBoundingBoxes = new ObstacleBoundingBoxesConstants();
+
+  public static class ObstacleBoundingBoxesConstants {
+
   }
 }

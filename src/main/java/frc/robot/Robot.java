@@ -211,9 +211,12 @@ public class Robot extends LoggedRobot {
 
     m_leds.breathe();
 
-    // AutoTrajectory trajectory = new AutoTrajectory(
+    // TrajectoryGenerator trajectory = new TrajectoryGenerator(
     //   new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-    //   new Pose2d(10, 2, Rotation2d.fromDegrees(0)));
+    //   new Pose2d(6, 14, Rotation2d.fromDegrees(0)));
+
+    // Logger.recordOutput("Robot/IntialPose", new Pose2d(0, 0, Rotation2d.fromDegrees(0)));
+    // Logger.recordOutput("Robot/FinalPose", new Pose2d(7, 7, Rotation2d.fromDegrees(0)));
 
     // PathPlannerPath path = trajectory.generatePath();
 
