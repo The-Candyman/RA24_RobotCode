@@ -19,8 +19,8 @@ public class LEDs extends Subsystem {
 
   // Main sections
   private Function<Integer, Function<Integer, Function<AddressableLEDBuffer, AddressableLEDBuffer>>> m_shooterColor = LEDModes
-      .setColor(Color.kRed);
-  private Function<Integer, Function<Integer, Function<AddressableLEDBuffer, AddressableLEDBuffer>>> m_driveColor = LEDModes.rainbowChase;
+      .setColor(new Color("#FDBB30"));
+  private Function<Integer, Function<Integer, Function<AddressableLEDBuffer, AddressableLEDBuffer>>> m_driveColor = LEDModes.redChase;
 
   public static LEDs getInstance() {
     if (m_instance == null) {
