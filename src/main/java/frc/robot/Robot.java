@@ -118,7 +118,7 @@ public class Robot extends LoggedRobot {
       int mode = Preferences.getInt("Demo LED Mode", 0);
 
       mode += 1;
-      mode %= 8;
+      mode %= 2;
 
       Preferences.setInt("Demo LED Mode", mode);
     }

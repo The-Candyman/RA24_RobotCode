@@ -8,6 +8,17 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public final class LEDModes {
   private static final double k_scale = 0.5;
+  
+  private static final double hexToDouble(int sixteens, int ones) {return ((double) (16 * sixteens + ones)) / 256.0;}
+  private static final double[] pacerBlue = {0.0, hexToDouble(2, 13), hexToDouble(6, 2)}; // #002D62
+  private static final double[] pacerYellow = {hexToDouble(15, 13), hexToDouble(11, 11), hexToDouble(3, 0)}; // #FDBB30
+  
+  private static final void setLEDPacerBlue(AddressableLEDBuffer buffer, int i, int brightness) {
+    buffer.setRGB(i, (int) (pacerBlue[0] * (double) brightness), (int) (pacerBlue[1] * (double) brightness), (int) (pacerBlue[2] * (double) brightness));
+  }
+  private static final void setLEDPacerYellow(AddressableLEDBuffer buffer, int i, int brightness) {
+    buffer.setRGB(i, (int) (pacerYellow[0] * (double) brightness), (int) (pacerYellow[1] * (double) brightness), (int) (pacerYellow[2] * (double) brightness));
+  }
 
   public static Function<Integer, Function<Integer, Function<AddressableLEDBuffer, AddressableLEDBuffer>>> setColor(
       Color color) {
@@ -83,10 +94,14 @@ public final class LEDModes {
       return (buffer) -> {
         double chaseSpeed = 100;
 
-        int firstPixelHue = (int) ((System.currentTimeMillis() / 1000.0 * chaseSpeed) % 180);
+        int firstPixelBrightness = (int) ((System.currentTimeMillis() / 1000.0 * chaseSpeed) % 360);
         for (int i = start; i < (start + length); i++) {
-          final int hue = MathUtil.clamp((firstPixelHue + (i * 180 / length)) % 180, 10, (int) (255*k_scale));
-          buffer.setRGB(i, hue, 0, 0);
+          final int brightness = (firstPixelBrightness + (i * 180 / length)) % 360 + 10;
+          if (brightness < 190) {
+            setLEDPacerBlue(buffer, i, brightness);
+          } else {
+            setLEDPacerYellow(buffer, i, brightness - 180);
+          }
         }
         return buffer;
       };
@@ -99,9 +114,13 @@ public final class LEDModes {
       return (buffer) -> {
         double breatheSpeed = 205;
 
-        int r = (int) (Math.pow(Math.sin(System.currentTimeMillis() / 1000.0), 2) * breatheSpeed) + 50;
+        int brightness = (int) (Math.pow(Math.sin(System.currentTimeMillis() / 1000.0), 2) * breatheSpeed) + 50; // sin^2 period is 3.14 = π seconds
         for (int i = start; i < (start + length); i++) {
-          buffer.setRGB(i, r, 0, 0);
+          if ((System.currentTimeMillis() / 1000.0) % (2.0 * Math.PI) < Math.PI) {
+            setLEDPacerBlue(buffer, i, brightness);
+          } else {
+            setLEDPacerYellow(buffer, i, brightness);
+          }
         }
         return buffer;
       };
@@ -114,20 +133,23 @@ public final class LEDModes {
       return (buffer) -> {
         double twinkleRate = 0.001;
         int reduction = 5;
+        int r;
+        int g;
+        int b;
 
         for (int i = start; i < (start + length); i++) {
           // Get the LED at the current index
           Color led = buffer.getLED(i);
-          int r = (int) (led.red * 255);
+          r = (int) (led.red * 255);
+          g = (int) (led.green * 255);
+          b = (int) (led.blue * 255);
 
           // If its red component is greater than 0, then we want to decrease it
-          if (r > 0 && Math.random() < 1.0) {
+          if (r > 0) {
             r -= reduction;
-          } else {
+          } else if (Math.random() < twinkleRate) {
             // Otherwise, at a random chance, set it to full red
-            if (Math.random() < twinkleRate) {
-              r = 255;
-            }
+            r = 255;
           }
           r = MathUtil.clamp(r, 0, (int) (255*k_scale));
           buffer.setRGB(i, r, 0, 0);
