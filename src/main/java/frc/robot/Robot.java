@@ -7,6 +7,7 @@ import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.proto.System;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Preferences;
@@ -83,6 +84,7 @@ public class Robot extends LoggedRobot {
     }
     if (!Preferences.containsKey("Demo LED Mode")) {
       Preferences.setInt("Demo LED Mode", 0);
+      RobotTelemetry.print("" + Preferences.getInt("Demo LDE Mode", 8213490));
     }
 
     // Camera server

@@ -11,7 +11,7 @@ public final class LEDModes {
   
   private static final double hexToDouble(int sixteens, int ones) {return ((double) (16 * sixteens + ones)) / 256.0;}
   private static final double[] pacerBlue = {0.0, hexToDouble(2, 13), hexToDouble(6, 2)}; // #002D62
-  private static final double[] pacerYellow = {hexToDouble(15, 13), hexToDouble(11, 11), hexToDouble(3, 0)}; // #FDBB30
+  private static final double[] pacerYellow = {hexToDouble(15, 13), hexToDouble(13, 11), hexToDouble(0, 0)}; // #FDBB30
   
   private static final void setLEDPacerBlue(AddressableLEDBuffer buffer, int i, int brightness) {
     buffer.setRGB(i, (int) (pacerBlue[0] * (double) brightness), (int) (pacerBlue[1] * (double) brightness), (int) (pacerBlue[2] * (double) brightness));
@@ -114,7 +114,7 @@ public final class LEDModes {
       return (buffer) -> {
         double breatheSpeed = 205;
 
-        int brightness = (int) (Math.pow(Math.sin(System.currentTimeMillis() / 1000.0), 2) * breatheSpeed) + 50; // sin^2 period is 3.14 = π seconds
+        int brightness = (int) (Math.pow(Math.cos(System.currentTimeMillis() / 1000.0), 2) * breatheSpeed) + 50; // sin^2 period is 3.14 = π seconds
         for (int i = start; i < (start + length); i++) {
           if ((System.currentTimeMillis() / 1000.0) % (2.0 * Math.PI) < Math.PI) {
             setLEDPacerBlue(buffer, i, brightness);
